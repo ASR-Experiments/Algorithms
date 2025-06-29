@@ -34,7 +34,7 @@ class TrieTest {
         val trieFilter = Trie('x')
         trieFilter.add(*testData)
         for (data in testData) {
-            assert(trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+            assert(trieFilter.search(data)) { "Expected $data to exist in the Trie Filter" }
         }
     }
 
@@ -44,11 +44,11 @@ class TrieTest {
         trieFilter.add(*testData)
         for (data in nonExistentData) {
             try {
-                assert(!trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+                assert(!trieFilter.search(data)) { "Expected $data to exist in the Trie Filter" }
             } catch (_: AssertionError) {
                 println(
                     """
-                    Expected $data to NOT exist in the Bloom filter, but it was found. Since, Bloom filter is 
+                    Expected $data to NOT exist in the Trie Filter, but it was found. Since, Trie Filter is 
                     probabilistic in nature, this is acceptable
                 """.trimIndent()
                         .replace("\\s+".toRegex(), " ")
@@ -61,7 +61,7 @@ class TrieTest {
     fun add() {
         val trieFilter = Trie('x')
         val result = trieFilter.add(*testData)
-        assert(result) { "Expected all items to be added successfully to the Bloom filter" }
+        assert(result) { "Expected all items to be added successfully to the Trie Filter" }
     }
 
     @Disabled("Getting out of memory")
@@ -74,7 +74,7 @@ class TrieTest {
             .map { testData.random() }
             .forEach { data ->
                 assert(trieFilter.search(data)) {
-                    "Expected `$data` to exist in Bloom filter"
+                    "Expected `$data` to exist in Trie Filter"
                 }
             }
         val newSample = randomStrings(count = 10_000)

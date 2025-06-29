@@ -33,7 +33,7 @@ class MapBasedMapBasedTrieTest {
         val trieFilter = MapBasedTrie('x')
         trieFilter.add(*testData)
         for (data in testData) {
-            assert(trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+            assert(trieFilter.search(data)) { "Expected $data to exist in the Trie Filter (based on Map)" }
         }
     }
 
@@ -42,7 +42,7 @@ class MapBasedMapBasedTrieTest {
         val trieFilter = MapBasedTrie('x')
         trieFilter.add(*testData)
         for (data in nonExistentData) {
-            assert(!trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+            assert(!trieFilter.search(data)) { "Expected $data to exist in the Trie Filter (based on Map)" }
         }
     }
 
@@ -50,7 +50,7 @@ class MapBasedMapBasedTrieTest {
     fun add() {
         val trieFilter = MapBasedTrie('x')
         val result = trieFilter.add(*testData)
-        assert(result) { "Expected all items to be added successfully to the Bloom filter" }
+        assert(result) { "Expected all items to be added successfully to the Trie Filter (based on Map)" }
     }
 
     @RepeatedTest(10)
@@ -62,7 +62,7 @@ class MapBasedMapBasedTrieTest {
             .map { testData.random() }
             .forEach { data ->
                 assert(trieFilter.search(data)) {
-                    "Expected `$data` to exist in Bloom filter"
+                    "Expected `$data` to exist in Trie Filter (based on Map)"
                 }
             }
         val newSample = randomStrings(count = 10_000)

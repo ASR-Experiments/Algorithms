@@ -12,6 +12,7 @@ import kotlin.time.toDuration
 private val filter: FilterInterface = BloomFilter()
 //private val filter: FilterInterface = Trie('x')
 //private val filter: FilterInterface = MapBasedTrie('x')
+//private val filter: FilterInterface = HashSetFilter()
 
 private val greetings = arrayOf(
     "Cool !",
