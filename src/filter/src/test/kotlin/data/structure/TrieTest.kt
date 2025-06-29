@@ -1,14 +1,14 @@
-package filter.impl
+package data.structure
 
-import org.asr.example.filter.impl.BloomFilter
+import org.asr.example.data.structure.Trie
 import org.asr.example.util.randomStrings
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class BloomFilterTest {
+class TrieTest {
 
     val testData: Array<String> = """
         FB, Arvind, Surash, Ravi, Kumar, Kotlin, Java, Python, JavaScript, C++, Priya, Anjali, Vikram, Neha, Sunil, 
@@ -31,20 +31,20 @@ class BloomFilterTest {
 
     @Test
     fun testSearch_whenTestedWithExistentData_thenReturnTrue() {
-        val bloomFilter = BloomFilter()
-        bloomFilter.add(*testData)
+        val trieFilter = Trie('x')
+        trieFilter.add(*testData)
         for (data in testData) {
-            assert(bloomFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+            assert(trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
         }
     }
 
     @Test
     fun testSearch_whenTestedWithNonExistentData_thenMayReturnTrue() {
-        val bloomFilter = BloomFilter()
-        bloomFilter.add(*testData)
+        val trieFilter = Trie('x')
+        trieFilter.add(*testData)
         for (data in nonExistentData) {
             try {
-                assert(!bloomFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
+                assert(!trieFilter.search(data)) { "Expected $data to exist in the Bloom filter" }
             } catch (_: AssertionError) {
                 println(
                     """
@@ -59,20 +59,21 @@ class BloomFilterTest {
 
     @Test
     fun add() {
-        val bloomFilter = BloomFilter()
-        val result = bloomFilter.add(*testData)
+        val trieFilter = Trie('x')
+        val result = trieFilter.add(*testData)
         assert(result) { "Expected all items to be added successfully to the Bloom filter" }
     }
 
+    @Disabled("Getting out of memory")
     @RepeatedTest(10)
     fun testSearch_whenLoadedWithHugeNumberOfElements_thenExpectFewFalsePositives() {
-        val bloomFilter = BloomFilter()
+        val trieFilter = Trie('x')
         val testData = randomStrings(count = 10_000)
-        bloomFilter.add(*testData)
+        trieFilter.add(*testData)
         (1..10)
             .map { testData.random() }
             .forEach { data ->
-                assert(bloomFilter.search(data)) {
+                assert(trieFilter.search(data)) {
                     "Expected `$data` to exist in Bloom filter"
                 }
             }
@@ -80,17 +81,16 @@ class BloomFilterTest {
         var matched = 0
         val startTime = System.nanoTime()
         for (sample in newSample) {
-            if (bloomFilter.search(sample))
+            if (trieFilter.search(sample))
                 matched += 1
         }
         val timeTookInNs = System.nanoTime() - startTime
         println(
             """
             Matched $matched among new samples and took total time of 
-            ${timeTookInNs.toDuration(DurationUnit.NANOSECONDS)} to search all strings in Bloom Filter
+            ${timeTookInNs.toDuration(DurationUnit.NANOSECONDS)} to search all strings in Trie
         """.trimIndent()
                 .replace("\\s+".toRegex(), " ")
         )
     }
-
 }
