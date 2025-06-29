@@ -8,7 +8,11 @@ import kotlin.math.absoluteValue
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+// Uncomment the version that you would like to invoke
 private val filter: FilterInterface = BloomFilter()
+//private val filter: FilterInterface = Trie('x')
+//private val filter: FilterInterface = MapBasedTrie('x')
+
 private val greetings = arrayOf(
     "Cool !",
     "Amazing !",
