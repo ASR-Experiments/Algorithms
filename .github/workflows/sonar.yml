@@ -3,8 +3,6 @@ on:
   push:
       branches:
       - main
-      paths:
-      - 'src/**'
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch: 
@@ -12,6 +10,7 @@ jobs:
   scanFilterProject:
     name: Scan for Filter project
     runs-on: ubuntu-latest
+    environment: Dev
     steps:
       - uses: actions/checkout@v3
         with:
@@ -22,3 +21,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: src/filter
+          args: >
+            -Dsonar.projectKey=asr-experiments_Algorithms_Filter
+            -Dsonar.organization=asr-experiments
+            -Dsonar.host.url=https://sonarcloud.io
