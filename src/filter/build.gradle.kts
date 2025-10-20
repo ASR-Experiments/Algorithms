@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.0"
-    id("org.sonarqube") version "6.2.0.5505"
+    id("org.sonarqube") version "7.0.0.6105"
 }
 
 group = "org.asr.example"
